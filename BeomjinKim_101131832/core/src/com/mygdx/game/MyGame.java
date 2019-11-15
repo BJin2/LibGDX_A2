@@ -6,5 +6,6 @@ public class MyGame extends GameBeta
     public void create()
     {
         super.create();
+        setActiveScreen(new TempScreen());
     }
 }
