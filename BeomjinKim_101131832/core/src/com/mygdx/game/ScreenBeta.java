@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -64,9 +65,18 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
     int score;
 
+    protected static float screenWidth;
+    protected  static float screenHeight;
+    protected  static float halfWidht;
+    protected  static float halfHeight;
+
     //CONSTRUCTOR
     ScreenBeta()
     {
+        screenWidth = Gdx.graphics.getWidth();
+        screenHeight = Gdx.graphics.getHeight();
+        halfWidht = screenWidth * 0.5f;
+        halfHeight = screenHeight * 0.5f;
 
         isPaused = false;
 
@@ -105,7 +115,10 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
 
     }
-
+    public static void setToCenter(Actor a)
+    {
+        a.setPosition((Gdx.graphics.getWidth()*0.5f)-(a.getWidth()*0.5f),(Gdx.graphics.getHeight()*0.5f)-(a.getHeight()*0.5f));
+    }
     public abstract void initialize();
 
     /**

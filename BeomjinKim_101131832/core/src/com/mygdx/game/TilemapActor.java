@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.Camera;
@@ -23,9 +24,11 @@ import java.util.Iterator;
 public class TilemapActor extends Actor
 {
     // window dimensions
-    public static int windowWidth  = 800;
-    public static int windowHeight = 600;
-   
+    public static int windowWidth  = Gdx.graphics.getWidth();
+    public static int windowHeight = Gdx.graphics.getHeight();
+    public static float offset_x;
+    public static float offset_y;
+
     public TiledMap tiledMap;
     public OrthographicCamera tiledCamera;
     private OrthoCachedTiledMapRenderer tiledMapRenderer;
@@ -45,6 +48,13 @@ public class TilemapActor extends Actor
         int mapWidth  = tileWidth  * numTilesHorizontal;
         int mapHeight = tileHeight * numTilesVertical;
 
+        offset_x = (mapWidth * 0.5f) - ScreenBeta.halfWidht;
+        offset_y = (mapHeight * 0.5f) - ScreenBeta.halfHeight;
+
+        //*/
+        windowWidth  = mapWidth;
+        windowHeight = mapHeight;
+        //*/
         tiledMapRenderer = new OrthoCachedTiledMapRenderer(tiledMap);
         tiledMapRenderer.setBlending(true);
         tiledCamera = new OrthographicCamera();
@@ -143,8 +153,8 @@ public class TilemapActor extends Actor
     {
         // adjust tilemap camera to stay in sync with main camera
         Camera mainCamera = getStage().getCamera();
-        tiledCamera.position.x = mainCamera.position.x;
-        tiledCamera.position.y = mainCamera.position.y;
+        tiledCamera.position.x = mainCamera.position.x + offset_x;
+        tiledCamera.position.y = mainCamera.position.y + offset_y;
         tiledCamera.update();
         tiledMapRenderer.setView(tiledCamera);
 

@@ -98,6 +98,11 @@ public class ActorBeta extends Actor {
         return rectangle;
     }
 
+    public void setToCenter()
+    {
+        setPosition((Gdx.graphics.getWidth()*0.5f)-(getWidth()*0.5f),(Gdx.graphics.getHeight()*0.5f)-(getHeight()*0.5f));
+    }
+
     //Stage will automatically call Actor class
     public void act(float dt) {
         super.act(dt);
