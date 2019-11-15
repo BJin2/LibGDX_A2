@@ -60,6 +60,9 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     Music defaultBackgroundMusic;
     Sound defaultSoundEffect;
 
+    //ACTORS
+    Actor follow;
+
     //BOOLEANS
     boolean isPaused;
     boolean isFollowing;
@@ -67,9 +70,9 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     int score;
 
     protected static float screenWidth;
-    protected  static float screenHeight;
-    protected  static float halfWidht;
-    protected  static float halfHeight;
+    protected static float screenHeight;
+    protected static float halfWidht;
+    protected static float halfHeight;
 
     //CONSTRUCTOR
     ScreenBeta()
@@ -120,6 +123,16 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public static void setToCenter(Actor a)
     {
         a.setPosition((Gdx.graphics.getWidth()*0.5f)-(a.getWidth()*0.5f),(Gdx.graphics.getHeight()*0.5f)-(a.getHeight()*0.5f));
+    }
+    public void startFollowing(Actor a)
+    {
+        follow = a;
+        isFollowing = true;
+    }
+    public void stopFollowing()
+    {
+        follow = null;
+        isFollowing = false;
     }
     public abstract void initialize();
 
@@ -180,6 +193,12 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
             delta = 0;
         else {
             delta = Math.min(delta, 1/30.0f);
+        }
+
+        if(isFollowing)
+        {
+            mainStage.getCamera().position.x = follow.getX() + (follow.getWidth()*0.5f);
+            mainStage.getCamera().position.y = follow.getY() + (follow.getHeight() * 0.5f);
         }
 
         mainStage.act(delta);

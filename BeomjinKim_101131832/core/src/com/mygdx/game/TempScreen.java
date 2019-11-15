@@ -18,25 +18,23 @@ public class TempScreen extends ScreenBeta
         temp.setSize(200, 200);
         temp.setToCenter();
         mainStage.addActor(temp);
+        startFollowing(temp);
     }
 
     @Override
     public void update(float dt)
     {
-        if(Gdx.input.justTouched())
+        if(Gdx.input.isTouched())
         {
             if(!once)
             {
                 once = true;
-                tma.SetTilesToShow(10, 5);
+                tma.SetTilesToShow(12, 8);
             }
             else
             {
                 temp.setPosition(temp.getX()+(Gdx.graphics.getWidth() * 0.0005f), temp.getY());
-                //mainStage.getCamera().position.x += Gdx.graphics.getWidth() * 0.0005f;
             }
         }
-        mainStage.getCamera().position.x = temp.getX() + (temp.getWidth()*0.5f);
-        mainStage.getCamera().position.y = temp.getY() + (temp.getHeight() * 0.5f);
     }
 }
