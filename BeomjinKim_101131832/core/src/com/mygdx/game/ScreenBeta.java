@@ -62,6 +62,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
 
     //BOOLEANS
     boolean isPaused;
+    boolean isFollowing;
 
     int score;
 
@@ -79,6 +80,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
         halfHeight = screenHeight * 0.5f;
 
         isPaused = false;
+        isFollowing = false;
 
         mainStage = new Stage();
         uiStage = new Stage();

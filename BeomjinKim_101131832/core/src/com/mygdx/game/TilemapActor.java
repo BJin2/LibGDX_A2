@@ -63,12 +63,28 @@ public class TilemapActor extends Actor
 
         // by adding object to Stage, can be drawn automatically
         theStage.addActor(this);
-
         // in theory, a solid boundary should be placed around the edge of the screen, 
         //  but just in case, this map can be used to set boundaries
       //  BaseActor.setWorldBounds(mapWidth, mapHeight);
     }
 
+    public void SetTilesToShow(int num_x, int num_y)
+    {
+        int tileWidth          = (int)tiledMap.getProperties().get("tilewidth");
+        int tileHeight         = (int)tiledMap.getProperties().get("tileheight");
+        int mapWidth  = tileWidth  * num_x;
+        int mapHeight = tileHeight * num_y;
+
+        offset_x = (mapWidth * 0.5f) - ScreenBeta.halfWidht;
+        offset_y = (mapHeight * 0.5f) - ScreenBeta.halfHeight;
+
+        windowWidth  = mapWidth;
+        windowHeight = mapHeight;
+
+        tiledCamera = new OrthographicCamera();
+        tiledCamera.setToOrtho(false, windowWidth, windowHeight);
+        tiledCamera.update();
+    }
     /**
      *  Search the map layers for Rectangle Objects that contain a property (key) called "name" with associated value propertyName.
      *  Typically used to store non-actor information such as SpawnPoint locations or dimensions of Solid objects.
