@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
@@ -20,9 +22,8 @@ public class TempScreen extends ScreenBeta
 
 	Touchpad stick;
 	ImageTextButton attack;
-	ImageTextButton attack2;
+	ImageTextButton jump;
 
-	boolean once = false;
 
 	@Override
 	public void initialize()
@@ -41,17 +42,30 @@ public class TempScreen extends ScreenBeta
 		}
 		player = new Character(8, 5);
 		SetPlayer();
-
 		player.setPosition(-64, TilemapActor.windowHeight*0.5f-8);
-
 
 		stick = new Touchpad(0.1f, skin);
 		stick.setSize(TilemapActor.windowWidth*0.15f, TilemapActor.windowWidth*0.15f);
 		stick.setPosition(0, 0);
 		stick.setColor(1, 1, 1, 0.7f);
 
+		attack = new ImageTextButton("A", skin);
+		attack.setSize(TilemapActor.windowWidth * 0.1f, TilemapActor.windowWidth * 0.1f);
+		//attack.getLabel().setFontScale(3);
+		attack.setPosition(TilemapActor.windowWidth-attack.getWidth()*2, 0);
+		attack.setColor(1, 1, 1, 0.7f);
+
+		jump = new ImageTextButton("B", skin);
+		jump.setSize(TilemapActor.windowWidth * 0.1f, TilemapActor.windowWidth * 0.1f);
+		//jump.getLabel().setFontScale(3);
+		jump.setPosition(TilemapActor.windowWidth-jump.getWidth(), 0);
+		jump.setColor(1, 1, 1, 0.7f);
+
+		AddEventListener();
 
 		mainStage.addActor(player);
+		mainStage.addActor(attack);
+		mainStage.addActor(jump);
 		mainStage.addActor(stick);
 	}
 
@@ -165,5 +179,33 @@ public class TempScreen extends ScreenBeta
 				}
 			}
 		}
+	}
+
+	public void AddEventListener()
+	{
+		attack.addListener(new EventListener()
+		{
+			@Override
+			public boolean handle(Event event)
+			{
+				if (!player.attacked && !player.attacking)
+				{
+					player.Attack(player, mainStage);
+				}
+				return false;
+			}
+		});
+		jump.addListener(new EventListener()
+		{
+			@Override
+			public boolean handle(Event event)
+			{
+				if (!player.attacked && !player.attacking)
+				{
+					//player.Attack2(enemy, mainStage);
+				}
+				return false;
+			}
+		});
 	}
 }
