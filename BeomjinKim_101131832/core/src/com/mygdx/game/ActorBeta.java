@@ -377,7 +377,7 @@ public class ActorBeta extends Actor {
         float w = getWidth();
         float h = getHeight();
 
-        float [] vertices = {0, 0, w, h, 0, h};
+        float [] vertices = {0, 0, w, 0, w, h, 0, h};
         boundaryPolygon = new Polygon(vertices);
     }
 

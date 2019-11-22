@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.graphics.Camera;
@@ -63,6 +64,7 @@ public class TilemapActor extends Actor
 
         // by adding object to Stage, can be drawn automatically
         theStage.addActor(this);
+        theStage.getViewport().setCamera(tiledCamera);
         // in theory, a solid boundary should be placed around the edge of the screen, 
         //  but just in case, this map can be used to set boundaries
       //  BaseActor.setWorldBounds(mapWidth, mapHeight);
@@ -167,10 +169,6 @@ public class TilemapActor extends Actor
 
     public void draw(Batch batch, float parentAlpha) 
     {
-        // adjust tilemap camera to stay in sync with main camera
-        Camera mainCamera = getStage().getCamera();
-        tiledCamera.position.x = mainCamera.position.x + offset_x;
-        tiledCamera.position.y = mainCamera.position.y + offset_y;
         tiledCamera.update();
         tiledMapRenderer.setView(tiledCamera);
 
