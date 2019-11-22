@@ -32,6 +32,7 @@ public class ActorBeta extends Actor {
     private Animation<TextureRegion> animation;
     private float elapsedTime;
     private boolean animationPaused;
+    protected boolean flip;
 
     private Vector2 velocityVec;
     private Vector2 accelerationVec;
@@ -111,7 +112,10 @@ public class ActorBeta extends Actor {
         if (!animationPaused)
             elapsedTime += dt;
     }
-
+    protected void Flip(boolean f)
+    {
+        flip = f;
+    }
     public void draw(Batch batch, float parentAlpha) {
 
         Color c = getColor(); // used to apply tint color effect
@@ -119,9 +123,16 @@ public class ActorBeta extends Actor {
         batch.setColor(c.r, c.g, c.b, c.a);
 
         if (animation != null && isVisible())
-            batch.draw(animation.getKeyFrame(elapsedTime),
+        {
+            TextureRegion tr = animation.getKeyFrame(elapsedTime);
+            if(flip && !tr.isFlipX())
+                tr.flip(flip, false);
+            else if(!flip && tr.isFlipX())
+                tr.flip(true, false);
+            batch.draw(tr,
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+        }
 
         super.draw(batch, parentAlpha);
 
@@ -255,7 +266,16 @@ public class ActorBeta extends Actor {
     public void setAnimationPaused(boolean pause) {
         animationPaused = pause;
     }
+    public void setAnimationWithReset(Animation<TextureRegion> anim) {
+        animation = anim;
+        elapsedTime = 0;
+        TextureRegion tr = animation.getKeyFrame(0);
+        float w = tr.getRegionWidth();
+        float h = tr.getRegionHeight();
 
+        setSize(w, h);
+        setOrigin(w / 2, h / 2);
+    }
 
     /**
      *  //PHYSICS METHODS
@@ -380,7 +400,20 @@ public class ActorBeta extends Actor {
         float [] vertices = {0, 0, w, 0, w, h, 0, h};
         boundaryPolygon = new Polygon(vertices);
     }
+    public void setOffsetBoundary(float left, float right, float top, float bottom)
+    {
+        float w = getWidth();
+        float h = getHeight();
 
+        float l = left;
+        float r = w-right;
+        float t = h-top;
+        float b = bottom;
+
+        float [] vertices = {l, b, r, b, r, t, l, t};
+
+        boundaryPolygon = new Polygon(vertices);
+    }
     public void setBoundaryPolygon(int numSides) {
         float w = getWidth();
         float h = getHeight();
