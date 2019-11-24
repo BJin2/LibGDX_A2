@@ -31,8 +31,14 @@ public class Character extends ActorBeta
 
 	public boolean attacking;
 	public boolean attacked;
+	public boolean jumping;
 	public float health;
 	public float cooltime;
+
+	private int[] keyIDs;
+	private  int numKeys;
+
+	float jumpForce;
 
 	Sound hit;
 	Sound attack1;
@@ -43,11 +49,19 @@ public class Character extends ActorBeta
 	Character(float _width, float _height)
 	{
 		animations = new Animation[6];
-
 		attacking = false;
 		attacked = false;
+		jumping = true;
+
 		health = 100;
 		cooltime = 0;
+		jumpForce = 0;
+		numKeys = 0;
+		keyIDs = new int[3];
+		for(int i = 0; i < 3; i++)
+		{
+			keyIDs[i] = -1;
+		}
 	}
 	public void setOffsetRect(float _width, float _height)
 	{
@@ -61,6 +75,10 @@ public class Character extends ActorBeta
 		setOffsetBoundary(offset_left, offset_right, offset_top, offset_bottom);
 	}
 
+	public int GetKey(int i)
+	{
+		return keyIDs[i];
+	}
 	public void Attack(Character target, Stage s)
 	{
 		SetCurrentAnimation(ANIM_STATE.atk1, true);
@@ -84,7 +102,25 @@ public class Character extends ActorBeta
 		swing1.play();
 		attack1.play();
 	}
-
+	public void Jump()
+	{
+		if(jumping)
+			return;
+		jumping = true;
+		jumpForce = 250.0f;
+	}
+	public void StopJump()
+	{
+		jumping = false;
+		jumpForce = 0;
+	}
+	public void PickupItem(int keyID)
+	{
+		if(numKeys == keyIDs.length)
+			return;
+		keyIDs[numKeys] = keyID;
+		numKeys++;
+	}
 	public void TakeDamage(float damage)
 	{
 		health -= damage;
@@ -136,5 +172,20 @@ public class Character extends ActorBeta
 		offset_left = 0.46f * width;
 		offset_right = 0.41f * width;
 		setOffsetBoundary(offset_left, offset_right, offset_top, offset_bottom);
+	}
+
+	@Override
+	public void act(float dt)
+	{
+		super.act(dt);
+		if(jumping)
+		{
+			setPosition(getX(), getY()+(jumpForce*dt));
+			jumpForce -= 250.0f * dt;
+			if(jumpForce <= 0.0f)
+			{
+				jumpForce = 0.0f;
+			}
+		}
 	}
 }

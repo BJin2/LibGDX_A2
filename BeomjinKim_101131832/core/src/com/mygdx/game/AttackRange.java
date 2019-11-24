@@ -9,16 +9,31 @@ public class AttackRange extends ActorBeta
 	float life;
 	float damage;
 	float timer;
-	Character target;
+	Character[] targets;
 	Sound hit;
 
 	AttackRange(float x, float y, float _width, float _height, float lifetime, float _damage, Character _target)
+	{
+		targets = new Character[1];
+		enabled = true;
+		life = lifetime;
+		damage = _damage;
+		timer = 0;
+		targets[0] = _target;
+
+		hit = Gdx.audio.newSound(Gdx.files.internal("Audio/hit_0.wav"));
+		setSize(_width, _height);
+		setPosition(x, y);
+		setBoundaryRectangle();
+	}
+
+	AttackRange(float x, float y, float _width, float _height, float lifetime, float _damage, Character[] _targets)
 	{
 		enabled = true;
 		life = lifetime;
 		damage = _damage;
 		timer = 0;
-		target = _target;
+		targets = _targets;
 
 		hit = Gdx.audio.newSound(Gdx.files.internal("Audio/hit_0.wav"));
 		setSize(_width, _height);
@@ -32,23 +47,26 @@ public class AttackRange extends ActorBeta
 		super.act(dt);
 		timer += dt;
 
-		if(timer >= life)
-		{
-			enabled = false;
-			remove();
-			return;
-		}
-
 		if(enabled)
 		{
-			if(this.overlaps(target))
+			if(timer >= life)
 			{
-				this.preventOverlap(target);
 				enabled = false;
-				target.TakeDamage(damage);
-				hit.play();
-				remove();
 			}
+			for(int i = 0; i < targets.length; i++)
+			{
+				if(this.overlaps(targets[i]))
+				{
+					this.preventOverlap(targets[i]);
+					enabled = false;
+					targets[i].TakeDamage(damage);
+					hit.play();
+				}
+			}
+		}
+		else
+		{
+			remove();
 		}
 	}
 }

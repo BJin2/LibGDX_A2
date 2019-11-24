@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="2019.11.20" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="30" height="15" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="53">
+ <tileset firstgid="1" source="../Tilesets/City.tsx"/>
+ <imagelayer id="2" name="Background" offsetx="-1267.49" offsety="-155.412">
+  <image source="../Images/Background_16.png" width="2400" height="400"/>
+ </imagelayer>
+ <layer id="3" name="Map" width="30" height="15" offsetx="0" offsety="-16">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+31,32,18,18,51,19,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+47,21,22,47,81,48,35,34,35,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+48,36,37,47,81,48,48,47,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+48,83,48,48,66,83,48,83,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+48,83,48,48,66,48,83,83,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+49,48,83,48,81,48,48,48,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+83,48,48,48,81,48,47,47,50,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+46,47,48,47,81,0,47,47,47,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="1" name="Ground" width="30" height="15">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+6,7,3,7,3,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,3,3,8,3,
+0,0,0,0,0,0,3,7,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,33,32,33,34,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,3,3,3,3,16,33,47,83,33,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,16,21,22,51,33,33,47,33,33,83,
+0,0,0,0,0,0,0,0,0,0,0,6,3,8,3,3,3,3,8,3,16,36,37,66,49,47,33,33,47,47,
+0,0,0,0,0,0,0,0,0,0,0,3,32,33,32,33,82,33,33,83,51,33,33,81,33,33,83,82,33,33,
+0,0,0,0,0,0,0,0,0,6,3,16,82,33,33,83,33,33,33,83,81,83,33,23,38,38,38,38,38,38,
+0,0,0,0,0,0,0,0,0,17,32,49,33,47,33,33,33,49,83,83,66,33,33,67,38,38,38,53,33,33,
+0,0,0,0,0,6,3,8,8,17,33,33,33,47,47,83,47,83,33,33,81,33,33,83,33,83,33,66,33,83,
+6,3,8,3,3,17,83,18,18,33,83,33,33,47,33,47,47,33,83,33,81,33,83,33,33,83,33,81,33,50,
+62,33,33,33,33,33,83,33,33,33,33,33,33,33,33,33,33,33,33,33,81,33,33,33,33,33,33,81,33,33
+</data>
+ </layer>
+ <objectgroup id="5" name="Collision">
+  <object id="38" x="0" y="208" width="96" height="16">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="39" x="80" y="192" width="80" height="16">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="40" x="144" y="160" width="48" height="32">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="41" x="176" y="128" width="160" height="32">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="42" x="320" y="96" width="96" height="32">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="43" x="400" y="64" width="112" height="32">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="44" x="0" y="64" width="96" height="32">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="45" x="96" y="80" width="48" height="16">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="46" x="-32" y="0" width="32" height="240">
+   <properties>
+    <property name="name" value="collider"/>
+   </properties>
+  </object>
+  <object id="48" x="448" y="16" width="32" height="48">
+   <properties>
+    <property name="doorID" type="int" value="0"/>
+    <property name="name" value="locked"/>
+   </properties>
+  </object>
+  <object id="49" x="320" y="48" width="32" height="48">
+   <properties>
+    <property name="doorID" type="int" value="1"/>
+    <property name="name" value="locked"/>
+   </properties>
+  </object>
+  <object id="50" x="16" y="48" width="16" height="16">
+   <properties>
+    <property name="keyID" type="int" value="0"/>
+    <property name="name" value="pickup"/>
+   </properties>
+  </object>
+  <object id="51" x="112" y="64" width="16" height="16">
+   <properties>
+    <property name="keyID" type="int" value="1"/>
+    <property name="name" value="pickup"/>
+   </properties>
+  </object>
+  <object id="52" x="64" y="48" width="16" height="16">
+   <properties>
+    <property name="name" value="enemy"/>
+   </properties>
+  </object>
+ </objectgroup>
+</map>

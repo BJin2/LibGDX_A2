@@ -13,10 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 import java.util.LinkedList;
 
 
-public class TempScreen extends ScreenBeta
+public class Level_2 extends ScreenBeta
 {
 	TilemapActor tma;
 	LinkedList<Collider> colliders;
+	LinkedList<Pickup> pickups;
+	LinkedList<Door> doors;
 
 	Character player;
 
@@ -30,20 +32,44 @@ public class TempScreen extends ScreenBeta
 	{
 		Skin skin = new Skin(Gdx.files.internal("clean-crispy/skin/clean-crispy-ui.json"));
 
-		tma = new TilemapActor("Tilemap/Maps/Temp_level.tmx", mainStage);
+		tma = new TilemapActor("Tilemap/Maps/level_2.tmx", mainStage);
 		mainStage.getViewport().setCamera(tma.tiledCamera);
 
 		colliders = new LinkedList<Collider>();
+		pickups = new LinkedList<Pickup>();
+		doors = new LinkedList<Door>();
+		float spawn_x = -32;
+		float spawn_y = 0;
 		for(MapObject obj : tma.getRectangleList("collider"))
 		{
 			Collider col = new Collider(obj.getProperties());
 			colliders.add(col);
 			mainStage.addActor(col);
 		}
+		for(MapObject obj : tma.getRectangleList("pickup"))
+		{
+			Pickup key = new Pickup(obj.getProperties());
+			pickups.add(key);
+			mainStage.addActor(key);
+		}
+		for(MapObject obj : tma.getRectangleList("locked"))
+		{
+			Door door = new Door(obj.getProperties());
+			doors.add(door);
+			mainStage.addActor(door);
+		}
+		for(MapObject obj : tma.getRectangleList("spawn"))
+		{
+			MapProperties props = obj.getProperties();
+			spawn_x = (float)props.get("x");
+			spawn_y = (float)props.get("y");
+		}
+
 		player = new Character(8, 5);
 		SetPlayer();
-		player.setPosition(-64, TilemapActor.windowHeight*0.5f-8);
+		player.setPosition(spawn_x-32, spawn_y);
 
+//UI controller
 		stick = new Touchpad(0.1f, skin);
 		stick.setSize(TilemapActor.windowWidth*0.15f, TilemapActor.windowWidth*0.15f);
 		stick.setPosition(0, 0);
@@ -51,13 +77,11 @@ public class TempScreen extends ScreenBeta
 
 		attack = new ImageTextButton("A", skin);
 		attack.setSize(TilemapActor.windowWidth * 0.1f, TilemapActor.windowWidth * 0.1f);
-		//attack.getLabel().setFontScale(3);
 		attack.setPosition(TilemapActor.windowWidth-attack.getWidth()*2, 0);
 		attack.setColor(1, 1, 1, 0.7f);
 
 		jump = new ImageTextButton("B", skin);
 		jump.setSize(TilemapActor.windowWidth * 0.1f, TilemapActor.windowWidth * 0.1f);
-		//jump.getLabel().setFontScale(3);
 		jump.setPosition(TilemapActor.windowWidth-jump.getWidth(), 0);
 		jump.setColor(1, 1, 1, 0.7f);
 
@@ -72,16 +96,51 @@ public class TempScreen extends ScreenBeta
 	@Override
 	public void update(float dt)
 	{
-		player.setPosition(player.getX(), player.getY()-19.0f*dt);
+		player.setPosition(player.getX(), player.getY()-98.0f*dt);
 		for(int i = 0; i < colliders.size(); i++)
 		{
 			if(player.overlaps(colliders.get(i)))
 			{
 				player.preventOverlap(colliders.get(i));
+				player.StopJump();
+			}
+		}
+		for(int i = 0; i < pickups.size(); i++)
+		{
+			if(player.overlaps(pickups.get(i)))
+			{
+				Pickup temp = pickups.get(i);
+				player.PickupItem(temp.getKeyID());
+				pickups.remove(i);
+				temp.remove();
+			}
+		}
+
+		for(int i = 0; i < doors.size(); i++)
+		{
+			Door door = doors.get(i);
+			if(player.overlaps(door))
+			{
+				boolean open = false;
+				for(int j = 0; j < 3; j++)
+				{
+					if(door.openDoor(player.GetKey(j)))
+					{
+						open = true;
+						door.remove();
+					}
+				}
+				if(!open)
+					player.preventOverlap(door);
 			}
 		}
 
 		ProcessInput(dt);
+
+		if(player.getX()+player.offset_left >= TilemapActor.windowWidth)
+		{
+			MyGame.setActiveScreen(new Level_1());
+		}
 	}
 
 	public void SetPlayer()
@@ -152,15 +211,15 @@ public class TempScreen extends ScreenBeta
 				float cur_y = player.getY() + (y * dt * TilemapActor.windowHeight * 0.1f);
 
 				//Clamp position
-				if (cur_x + player.offset_left < 0)
-					cur_x = -player.offset_left;
-				else if (cur_x + player.getWidth() - player.offset_right > screenWidth)
-					cur_x = screenWidth - player.getWidth() + player.offset_right;
-
-				if (cur_y + player.offset_bottom < 0)
-					cur_y = -player.offset_bottom;
-				else if (cur_y + player.offset_bottom > screenHeight * 0.25f)
-					cur_y = screenHeight * 0.25f - player.offset_bottom;
+				//if (cur_x + player.offset_left < 0)
+				//	cur_x = -player.offset_left;
+				//else if (cur_x + player.getWidth() - player.offset_right > screenWidth)
+				//	cur_x = screenWidth - player.getWidth() + player.offset_right;
+				//
+				//if (cur_y + player.offset_bottom < 0)
+				//	cur_y = -player.offset_bottom;
+				//else if (cur_y + player.offset_bottom > screenHeight * 0.25f)
+				//	cur_y = screenHeight * 0.25f - player.offset_bottom;
 
 				//Set animation
 				player.SetCurrentAnimation(Character.ANIM_STATE.left, false);
@@ -202,7 +261,7 @@ public class TempScreen extends ScreenBeta
 			{
 				if (!player.attacked && !player.attacking)
 				{
-					//player.Attack2(enemy, mainStage);
+					player.Jump( );
 				}
 				return false;
 			}
