@@ -68,7 +68,7 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     boolean isFollowing;
 
     protected static int score = 0;
-    protected static int level = 1;
+    protected static int level = 2;
 
     protected static float screenWidth;
     protected static float screenHeight;

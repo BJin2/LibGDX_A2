@@ -139,7 +139,13 @@ public class GameScreen extends ScreenBeta
 	public void update(float dt)
 	{
 		timer -= dt;
+		//time out
+		if(timer <= 0)
+			MyGame.setActiveScreen(new GameScreen());
+
 		UpdateLabel();
+
+		//player gravity
 		player.setPosition(player.getX(), player.getY()-98.0f*dt);
 
 		for(int i = 0; i < colliders.size(); i++)
@@ -340,11 +346,12 @@ public class GameScreen extends ScreenBeta
 		enemy.setOffsetRect(32*5, 22*5);
 		float spawn_x = (float)props.get("x");
 		float spawn_y = (float)props.get("y");
-		enemy.setPosition(spawn_x-32, spawn_y-48);
+		enemy.setPosition(spawn_x-32, spawn_y);
 	}
 	public void SimulateAI(float dt)
 	{
 		float WIDTH = TilemapActor.windowWidth;
+		float HEIGHT = TilemapActor.windowHeight;
 
 		for(int i = 0; i < enemies.size(); i++)
 		{
@@ -356,8 +363,17 @@ public class GameScreen extends ScreenBeta
 					enemy.preventOverlap(colliders.get(j));
 				}
 			}
+			for(int j = 0; j < doors.size(); j++)
+			{
+				Door door = doors.get(j);
+				if(enemy.overlaps(door))
+				{
+					enemy.preventOverlap(door);
+				}
+			}
 			if(enemy.health <= 0)
 			{
+				score += 10;
 				enemies.remove(i);
 				return;
 			}
@@ -387,7 +403,7 @@ public class GameScreen extends ScreenBeta
 					enemy.Attack(player, mainStage);
 					enemy.cooltime = 0;
 				}
-				else if(distance <= WIDTH * 0.2f)
+				else if((distance <= WIDTH * 0.2f) || Math.abs(dir.y) > HEIGHT * 0.1f)
 				{
 					enemy.SetCurrentAnimation(Character.ANIM_STATE.idle, false);
 				}
