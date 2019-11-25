@@ -79,6 +79,29 @@ public class Character extends ActorBeta
 	{
 		return keyIDs[i];
 	}
+	public void Attack(Character[] target, Stage s)
+	{
+		SetCurrentAnimation(ANIM_STATE.atk1, true);
+		float atk_x;
+		float atk_y = getY() + (offset_top*1.5f);
+		float atk_width = width*0.2f;
+		float atk_height = atk_width;
+
+		if(flip)
+		{
+			atk_x = getX()+getWidth()-offset_right;
+		}
+		else
+		{
+			atk_x = (getX()+offset_left)-atk_width;
+		}
+
+		AttackRange ar = new AttackRange(atk_x, atk_y, atk_width, atk_height, 0.4f, 10, target);
+		s.addActor(ar);
+		attacking = true;
+		swing1.play();
+		attack1.play();
+	}
 	public void Attack(Character target, Stage s)
 	{
 		SetCurrentAnimation(ANIM_STATE.atk1, true);

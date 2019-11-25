@@ -67,7 +67,8 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     boolean isPaused;
     boolean isFollowing;
 
-    int score;
+    protected static int score = 0;
+    protected static int level = 1;
 
     protected static float screenWidth;
     protected static float screenHeight;
@@ -184,10 +185,8 @@ public abstract class ScreenBeta implements Screen, InputProcessor {
     public abstract void update(float dt);
 
     @Override
-    public void render(float delta) {
-
-        score++;
-
+    public void render(float delta)
+    {
         //PAUSE LOGIC
         if(isPaused)
             delta = 0;
